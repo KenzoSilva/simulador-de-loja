@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Produtos</title>
+</head>
+<body>
+    <h1>Simulador de Produtos</h1>
+
+    <div>
+        <label for="nomeProduto">Nome do Produto: </label>
+        <input type="text" id="nomeProduto" value="Caneta">
+    </div>
+    <div>
+        <label for="valorProduto">Valor: </label>
+        <input type="number" id="valorProduto" value="2.50">
+    </div>
+    <div>
+        <label for="quantidadeProduto">Quantidade: </label>
+        <input type="number" id="quantidadeProduto" value="100">
+    </div>
+    <button onclick="criarProduto()">Criar Produto</button>
+    
+    <div id="produtoInfo"></div>
+
+    <script>
+        // Classe Produto
+        class Produto {
+            constructor(nome, valor, quantidade) {
+                this.nome = nome;
+                this.valor = valor;
+                this.quantidade = quantidade;
+            }
+
+            // Método para exibir as informações do produto
+            exibirDetalhes() {
+                return `Produto: ${this.nome}, Valor: R$${this.valor.toFixed(2)}, Quantidade: ${this.quantidade}`;
+            }
+
+            // Método para adicionar quantidade ao estoque
+            adicionarQuantidade(quantidade) {
+                this.quantidade += quantidade;
+                return `Nova quantidade de ${this.nome}: ${this.quantidade}`;
+            }
+
+            // Método para remover quantidade do estoque
+            removerQuantidade(quantidade) {
+                if (this.quantidade >= quantidade) {
+                    this.quantidade -= quantidade;
+                    return `Nova quantidade de ${this.nome}: ${this.quantidade}`;
+                } else {
+                    return `Quantidade insuficiente no estoque!`;
+                }
+            }
+        }
+
+        let produto;
+
+        // Função para criar um novo produto
+        function criarProduto() {
+            const nome = document.getElementById('nomeProduto').value;
+            const valor = parseFloat(document.getElementById('valorProduto').value);
+            const quantidade = parseInt(document.getElementById('quantidadeProduto').value);
+
+            produto = new Produto(nome, valor, quantidade);
+            document.getElementById('produtoInfo').innerHTML = produto.exibirDetalhes();
+        }
+    </script>
+</body>
+</html>
